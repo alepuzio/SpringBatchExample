@@ -4,7 +4,7 @@
 
 	<groupId>net.alepuzio.spring</groupId>
 	<artifactId>SpringBatchExample</artifactId>
-	<version>0.0.1-SNAPSHOT</version>
+	<version>0.0.2</version><!-- guidelines of Semantic Versioning - https://semver.org/ -->
 	<packaging>jar</packaging>
 
 	<name>SpringBatchDemo</name>
@@ -80,8 +80,14 @@
 			<version>1.4.10</version>
 		</dependency>
 
+		<!-- Log -->
+		<dependency>
+			<groupId>ch.qos.logback</groupId>
+			<artifactId>logback-classic</artifactId>
+			<version>1.2.3</version>
+		</dependency>
 	</dependencies>
-	
+
 	<build>
 		<finalName>spring-batch</finalName>
 		<plugins>
@@ -105,5 +111,5 @@
 			</plugin>
 		</plugins>
 	</build>
-	
+
 </project>
