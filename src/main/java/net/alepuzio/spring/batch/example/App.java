@@ -11,11 +11,15 @@ import org.springframework.context.support.ClassPathXmlApplicationContext;
 
 
 public class App {
-	
-	private static final Logger logger = LoggerFactory.getLogger("net.alepuzio.spring.batch.example.App");
+
+	private final Logger logger;
+
+	App(){
+		this.logger = LoggerFactory.getLogger("net.alepuzio.spring.batch.example.App");
+	}
 
 	public static void main(String[] args) {
-
+		App instance = new App();
 		String[] springConfig = { "spring/batch/jobs/job-batch-demo.xml" };
 		ClassPathXmlApplicationContext context = new ClassPathXmlApplicationContext(springConfig);
 		JobLauncher jobLauncher = (JobLauncher) context.getBean("jobLauncher");
@@ -26,10 +30,20 @@ public class App {
 		try {
 			execution = jobLauncher.run(job, jobParameters);
 		} catch (Exception e) {
-			logger.error(e.getMessage());
-			e.printStackTrace();
+			instance.error(e);
 		}
-		logger.info("Exit Status : " + execution.getStatus());
+		instance.info("Exit Status : " + execution.getStatus());
 		context.close();
 	}
+	
+	void error(Exception e){
+		this.logger.error(e.getMessage());
+		e.printStackTrace();
+	}
+	
+	void info(String message){
+		this.logger.info(message);
+	}
+	
+		
 }
