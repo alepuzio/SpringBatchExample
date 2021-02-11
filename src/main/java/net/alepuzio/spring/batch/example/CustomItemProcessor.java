@@ -12,11 +12,23 @@ public class CustomItemProcessor implements ItemProcessor<Report, Report> {
 
 	public Report process(Report item) throws Exception {
 		logger.info("Processing..." + item);
-		String fname = item.getFirstName();
-		String lname = item.getLastName();
-		item.setFirstName(fname.toUpperCase());
-		item.setLastName(lname.toUpperCase());
+		item.setFirstName(new Upper(item.getFirstName()).value());
+		item.setLastName(new Upper(item.getLastName()).value());
 		return item;
+	}
+
+}
+
+class Upper {
+
+	private String origin;
+
+	Upper(String newInput) {
+		this.origin = newInput;
+	}
+
+	String value() {
+		return this.origin.toUpperCase();
 	}
 
 }
