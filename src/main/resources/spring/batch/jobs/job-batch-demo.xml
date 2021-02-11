@@ -37,10 +37,6 @@
 				</property>
 				<property name="fieldSetMapper">
 					<bean class="net.alepuzio.spring.batch.example.ReportFieldSetMapper" />
-
-					<!-- i		f no data type conversion, use BeanWrapperFieldSetMapper to map 
-						by name <bean class="org.springframework.batch.item.file.mapping.BeanWrapperFieldSetMapper"> 
-						<property name="prototypeBeanName" value="report" /> </bean> -->
 				</property>
 			</bean>
 		</property>
