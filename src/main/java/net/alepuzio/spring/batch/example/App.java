@@ -1,5 +1,8 @@
 package net.alepuzio.spring.batch.example;
 
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.batch.core.Job;
@@ -20,6 +23,8 @@ public class App {
 
 	public static void main(String[] args) {
 		App instance = new App();
+
+		instance.info("Start at : " + new SimpleDateFormat("dd/MM/yyyy HH:mm:ss").format(Calendar.getInstance().getTimeInMillis()));
 		String[] springConfig = { "spring/batch/jobs/job-batch-demo.xml" };
 		ClassPathXmlApplicationContext context = new ClassPathXmlApplicationContext(springConfig);
 		JobLauncher jobLauncher = (JobLauncher) context.getBean("jobLauncher");
@@ -29,10 +34,13 @@ public class App {
 		JobExecution execution = null;
 		try {
 			execution = jobLauncher.run(job, jobParameters);
+			instance.info(String.format("Job %s v.%s startes at %s ", execution.getId(),
+					execution.getVersion(),execution.getStartTime()));
 		} catch (Exception e) {
 			instance.error(e);
 		}
-		instance.info("Exit Status : " + execution.getStatus());
+		instance.info(String.format("Job %s v.%s finished at %s with status %s", execution.getId(),
+				execution.getVersion(),execution.getEndTime(), execution.getStatus().name()));
 		context.close();
 	}
 	
