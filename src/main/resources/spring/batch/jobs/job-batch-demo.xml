@@ -5,9 +5,9 @@
 		http://www.springframework.org/schema/beans 
 		http://www.springframework.org/schema/beans/spring-beans-4.3.xsd
 	">
-
-	<import resource="../config/context.xml" />
+	
 	<import resource="../config/database.xml" />
+	<import resource="../config/context.xml" />
 
 	<bean id="report" class="net.alepuzio.spring.model.Report"
 		scope="prototype" />

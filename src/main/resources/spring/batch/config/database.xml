@@ -10,13 +10,19 @@
 		class="org.springframework.jdbc.datasource.DriverManagerDataSource">
 		<property name="driverClassName" value="org.apache.derby.jdbc.ClientDriver" />
 		<property name="url"
-			value="jdbc:derby://localhost:1527/dbname;create=true" />
+			value="jdbc:derby://localhost:1527/spring_batch;" /><!-- create=true -->
 		<property name="username" value="test" />
-		<property name="password" value="test123" />
+		<property name="password" value="test123_" />
 	</bean>
 
-	<bean id="transactionManager"
-		class="org.springframework.batch.support.transaction.ResourcelessTransactionManager" />
+<!-- il nome dell'ID e' statico perche' richiamato da altri oggetti Spring
+per modificare la classe in base all'ambiente ci vuole file di properties -->
+	<bean id="transactionManager"		class="org.springframework.batch.support.transaction.ResourcelessTransactionManager" />
+	
+	<!-- 
+	bean id="transactionManagerProd"		class="org.springframework.jdbc.datasource.DataSourceTransactionManager" /
+	-->
+
 	<jdbc:embedded-database id="dataSource" type="DERBY">
 		<jdbc:script location="classpath:script/create-user-table.sql" />
 		<jdbc:script location="classpath:script/create-db.sql" />
