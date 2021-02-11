@@ -5,9 +5,9 @@
 		http://www.springframework.org/schema/beans 
 		http://www.springframework.org/schema/beans/spring-beans-4.3.xsd
 	">
-
-	<import resource="../config/context.xml" />
+	
 	<import resource="../config/database.xml" />
+	<import resource="../config/context.xml" />
 
 	<bean id="report" class="net.alepuzio.spring.model.Report"
 		scope="prototype" />
@@ -37,10 +37,6 @@
 				</property>
 				<property name="fieldSetMapper">
 					<bean class="net.alepuzio.spring.batch.example.ReportFieldSetMapper" />
-
-					<!-- i		f no data type conversion, use BeanWrapperFieldSetMapper to map 
-						by name <bean class="org.springframework.batch.item.file.mapping.BeanWrapperFieldSetMapper"> 
-						<property name="prototypeBeanName" value="report" /> </bean> -->
 				</property>
 			</bean>
 		</property>
