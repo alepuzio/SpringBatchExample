@@ -27,13 +27,13 @@ public class App {
 				+ new SimpleDateFormat("dd/MM/yyyy HH:mm:ss").format(Calendar.getInstance().getTimeInMillis()));
 		String[] springConfig = { "spring/batch/jobs/job-batch-demo.xml" };
 		ClassPathXmlApplicationContext context = new ClassPathXmlApplicationContext(springConfig);
-		JobLauncher jobLauncher = (JobLauncher) context.getBean("jobLauncher");
+		
 		Job job = (Job) context.getBean("DemoJobXMLWriter");
 		JobParameters jobParameters = new JobParametersBuilder().addLong("time", System.currentTimeMillis())
 				.toJobParameters();
 		JobExecution execution = null;
 		try {
-			execution = jobLauncher.run(job, jobParameters);
+			execution = ((JobLauncher) context.getBean("jobLauncher")).run(job, jobParameters);
 			instance.info(String.format("Job %s v.%s startes at %s ", execution.getId(), execution.getVersion(),
 					execution.getStartTime()));
 		} catch (Exception e) {

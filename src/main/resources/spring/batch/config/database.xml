@@ -19,8 +19,7 @@ per modificare la classe in base all'ambiente ci vuole file di properties -->
 	<!-- jdbc:embedded-database mi permette di non avere un database esterno cui collegarmi, utile per sviluppo locale -->
 	<!-- type ha un intervallo di valori limitato -->
 	<jdbc:embedded-database id="dataSource" type="DERBY">
-		<jdbc:script location="classpath:script/create-user-table.sql" />
 		<jdbc:script location="classpath:script/create-db.sql" />
-		<jdbc:script location="classpath:script/insert-data.sql" />
 	</jdbc:embedded-database>
-</beans>
+ 
+ </beans>

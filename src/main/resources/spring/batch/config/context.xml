@@ -4,7 +4,8 @@
 		http://www.springframework.org/schema/beans 
 		http://www.springframework.org/schema/beans/spring-beans-4.3.xsd">
 
-
+<!-- 	<context:property-placeholder location="my.properties"/>
+ -->
 	<bean id="jobLauncher" class="org.springframework.batch.core.launch.support.SimpleJobLauncher">
 		<property name="jobRepository" ref="jobRepository" />
 	</bean>
@@ -14,7 +15,7 @@
 		class="org.springframework.batch.core.repository.support.JobRepositoryFactoryBean">
 		<property name="dataSource" ref="dataSource" />
 		<property name="transactionManager" ref="transactionManager" />
-		<property name="databaseType" value="derby" /><!-- tpi definiti e previsti -->
+		<property name="databaseType" value="derby" /><!-- tipi definiti e previsti -->
 	</bean>
 
 

@@ -5,11 +5,16 @@
 			</pattern>
 		</encoder>
 	</appender>
-	<!-- TODO posso indicare ache il path relativo dove scrivere il log? -->
+	<!-- TODO posso indicare ache il path relativo dove scrivere il log? springProperty 
+		scope="context" name="LOG_PATH" source="logging.path"/ -->
+
+	<property name="DIR_LOG" value="./logs/" />
+
+
 	<appender name="rollingFile"
 		class="ch.qos.logback.core.rolling.RollingFileAppender">
 		<rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
-			<fileNamePattern>log-%d{yyyy-MM-dd}.log</fileNamePattern>
+			<fileNamePattern>${DIR_LOG}/log-%d{yyyy-MM-dd}.log</fileNamePattern>
 			<maxHistory>30</maxHistory>
 			<totalSizeCap>1GB</totalSizeCap>
 		</rollingPolicy>

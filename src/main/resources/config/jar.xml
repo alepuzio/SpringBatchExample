@@ -14,11 +14,25 @@
         </includes>
         <outputDirectory>/config/</outputDirectory>
      </fileSet>
+     <fileSet><!-- configurazione spring -->
+        <directory>${basedir}/src/main/resources/spring/batch/config/jobs</directory>   
+        <includes>
+           <include>*.xml</include>
+        </includes>
+        <outputDirectory>/config/</outputDirectory>
+     </fileSet>
+    <fileSet> <!-- Create directory for the SQL scripts-->
+    <directory>${basedir}/src/main/resources/script/</directory>
+        <outputDirectory>/script/db/</outputDirectory>
+        <includes><include>**/*.sql</include></includes>
+    </fileSet>
 
     <fileSet> <!-- Create empty directory for the logs-->
         <outputDirectory>/logs/</outputDirectory>
-        <excludes><exclude>**/*</exclude></excludes>
-    </fileSet>
+        <includes>
+           <include>*.xml</include>
+        </includes>
+	    </fileSet>
     <fileSet> <!-- Create empty directory for the input-->
         <outputDirectory>/input/</outputDirectory>
         <excludes><exclude>**/*</exclude></excludes>
