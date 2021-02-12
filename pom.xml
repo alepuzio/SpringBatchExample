@@ -89,7 +89,7 @@
 	</dependencies>
 
 	<build>
-		<finalName>SpringBatchExample-${pom.version}</finalName>
+		<finalName>SpringBatchExample-${project.version}</finalName>
 		<plugins>
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
@@ -156,6 +156,12 @@
 				<artifactId>maven-jar-plugin</artifactId>
 				<configuration>
 					<archive>
+						<manifest>
+							<addClasspath>true</addClasspath>
+							<classpathPrefix>lib</classpathPrefix>
+							<main-class>net.alepuzio.spring.batch.example.App</main-class>
+						</manifest>
+
 						<manifestEntries>
 							<Class-Path>lib/</Class-Path>
 							<manifest>
