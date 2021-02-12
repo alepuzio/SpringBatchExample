@@ -8,20 +8,27 @@
   </formats>
   <fileSets>
      <fileSet><!-- configurazione -->
-        <directory>${basedir}/src/main/resources</directory>   
+        <directory>${basedir}/src/main/resources/config</directory>   
         <includes>
            <include>*.xml</include>
         </includes>
         <outputDirectory>/config/</outputDirectory>
      </fileSet>
-<!--     <fileSet>
-      <directory>${project.build.directory}/</directory>
-      <outputDirectory>/lib/</outputDirectory>
-      <includes>
-        <include>*.jar</include>
-      </includes>
+
+    <fileSet> <!-- Create empty directory for the logs-->
+        <outputDirectory>/logs/</outputDirectory>
+        <excludes><exclude>**/*</exclude></excludes>
     </fileSet>
- -->    <fileSet>
+    <fileSet> <!-- Create empty directory for the input-->
+        <outputDirectory>/input/</outputDirectory>
+        <excludes><exclude>**/*</exclude></excludes>
+    </fileSet>
+    <fileSet> <!-- Create empty directory for the output-->
+        <outputDirectory>/output/</outputDirectory>
+        <excludes><exclude>**/*</exclude></excludes>
+    </fileSet>
+
+<fileSet>
       <directory>${project.build.directory}</directory>
       <outputDirectory>/</outputDirectory>
       <includes>
