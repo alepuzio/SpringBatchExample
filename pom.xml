@@ -158,7 +158,6 @@
 					<archive>
 						<manifestEntries>
 							<Class-Path>lib/</Class-Path>
-
 							<manifest>
 								<addClasspath>true</addClasspath>
 							</manifest>
