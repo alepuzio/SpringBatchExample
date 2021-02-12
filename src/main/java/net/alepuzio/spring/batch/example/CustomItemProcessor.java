@@ -11,10 +11,12 @@ public class CustomItemProcessor implements ItemProcessor<Report, Report> {
 	private final Logger logger = LoggerFactory.getLogger(this.getClass().getName());
 
 	public Report process(Report item) throws Exception {
-		logger.info("Processing..." + item);
-		item.setFirstName(new Upper(item.getFirstName()).value());
-		item.setLastName(new Upper(item.getLastName()).value());
-		return item;
+		logger.info(String.format("Processing (%s)",item));
+		Report upperItem = new Report();
+		upperItem.setFirstName(new Upper(item.getFirstName()).value());
+		upperItem.setLastName(new Upper(item.getLastName()).value());
+		logger.info(String.format("Converted (%s) into (%s)",item, upperItem));
+		return upperItem;
 	}
 
 }
