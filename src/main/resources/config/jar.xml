@@ -1,65 +1,69 @@
 <assembly xmlns="http://maven.apache.org/ASSEMBLY/2.1.0"
-  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-  xsi:schemaLocation="http://maven.apache.org/ASSEMBLY/2.1.0 http://maven.apache.org/xsd/assembly-2.1.0.xsd">
-  <!-- TODO: a jarjar format would be better -->
-  <id>jar-with-dependencies</id>
-  <formats>
-    <format>zip</format>
-  </formats>
-  <fileSets>
-     <fileSet><!-- configurazione -->
-        <directory>${basedir}/src/main/resources/config</directory>   
-        <includes>
-           <include>*.xml</include>
-        </includes>
-        <outputDirectory>/config/</outputDirectory>
-     </fileSet>
-     <fileSet><!-- configurazione spring -->
-        <directory>${basedir}/src/main/resources/spring/batch/config/jobs</directory>   
-        <includes>
-           <include>*.xml</include>
-        </includes>
-        <outputDirectory>/config/</outputDirectory>
-     </fileSet>
-    <fileSet> <!-- Create directory for the SQL scripts-->
-    <directory>${basedir}/src/main/resources/script/</directory>
-        <outputDirectory>/script</outputDirectory>
-        <includes>
-        <include>**/*.sql</include>
-        <include>**/*.cmd</include>
-        <include>**/*.sh</include>
-        </includes>
-    </fileSet>
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/ASSEMBLY/2.1.0 http://maven.apache.org/xsd/assembly-2.1.0.xsd">
+	<!-- TODO: a jarjar format would be better -->
+	<id>jar-with-dependencies</id>
+	<formats>
+		<format>zip</format>
+	</formats>
+	<fileSets>
+		<fileSet><!-- configurazione -->
+			<directory>${basedir}/src/main/resources/config</directory>
+			<includes>
+				<include>*.xml</include>
+			</includes>
+			<outputDirectory>/config/</outputDirectory>
+		</fileSet>
+		<fileSet><!-- configurazione spring -->
+			<directory>${basedir}/src/main/resources/spring/batch/config/jobs</directory>
+			<includes>
+				<include>*.xml</include>
+			</includes>
+			<outputDirectory>/config/</outputDirectory>
+		</fileSet>
+		<fileSet> <!-- Create directory for the SQL scripts -->
+			<directory>${basedir}/src/main/resources/script/</directory>
+			<outputDirectory>/script</outputDirectory>
+			<includes>
+				<include>**/*.sql</include>
+				<include>**/*.cmd</include>
+				<include>**/*.sh</include>
+			</includes>
+		</fileSet>
 
-    <fileSet> <!-- Create empty directory for the logs-->
-        <outputDirectory>/logs/</outputDirectory>
-        <excludes>
-           <exclude>**/*</exclude>
-        </excludes>
-	    </fileSet>
-    <fileSet> <!-- Create empty directory for the input-->
-        <outputDirectory>/input/</outputDirectory>
-        <excludes><exclude>**/*</exclude></excludes>
-    </fileSet>
-    <fileSet> <!-- Create empty directory for the output-->
-        <outputDirectory>/output/</outputDirectory>
-        <excludes><exclude>**/*</exclude></excludes>
-    </fileSet>
+		<fileSet> <!-- Create empty directory for the logs -->
+			<outputDirectory>/logs/</outputDirectory>
+			<excludes>
+				<exclude>**/*</exclude>
+			</excludes>
+		</fileSet>
+		<fileSet> <!-- Create empty directory for the input -->
+			<outputDirectory>/input/</outputDirectory>
+			<excludes>
+				<exclude>**/*</exclude>
+			</excludes>
+		</fileSet>
+		<fileSet> <!-- Create empty directory for the output -->
+			<outputDirectory>/output/</outputDirectory>
+			<excludes>
+				<exclude>**/*</exclude>
+			</excludes>
+		</fileSet>
 
-<fileSet>
-      <directory>${project.build.directory}</directory>
-      <outputDirectory>/</outputDirectory>
-      <includes>
-        <include>*.jar</include><!-- jar da lanciare -->
-      </includes>
-    </fileSet>
-    </fileSets>
-  <dependencySets>
-    <dependencySet>
-      <outputDirectory>/lib/</outputDirectory>
-      <useProjectArtifact>true</useProjectArtifact>
-      <unpack>false</unpack>
-      <scope>runtime</scope>
-    </dependencySet>
-  </dependencySets>
+		<fileSet>
+			<directory>${project.build.directory}</directory>
+			<outputDirectory>/</outputDirectory>
+			<includes>
+				<include>*.jar</include><!-- jar da lanciare -->
+			</includes>
+		</fileSet>
+	</fileSets>
+	<dependencySets>
+		<dependencySet>
+			<outputDirectory>/lib/</outputDirectory>
+			<useProjectArtifact>false</useProjectArtifact>
+			<unpack>false</unpack>
+			<scope>runtime</scope>
+		</dependencySet>
+	</dependencySets>
 </assembly>
