@@ -23,15 +23,19 @@
      </fileSet>
     <fileSet> <!-- Create directory for the SQL scripts-->
     <directory>${basedir}/src/main/resources/script/</directory>
-        <outputDirectory>/script/db/</outputDirectory>
-        <includes><include>**/*.sql</include></includes>
+        <outputDirectory>/script</outputDirectory>
+        <includes>
+        <include>**/*.sql</include>
+        <include>**/*.cmd</include>
+        <include>**/*.sh</include>
+        </includes>
     </fileSet>
 
     <fileSet> <!-- Create empty directory for the logs-->
         <outputDirectory>/logs/</outputDirectory>
-        <includes>
-           <include>*.xml</include>
-        </includes>
+        <excludes>
+           <exclude>**/*</exclude>
+        </excludes>
 	    </fileSet>
     <fileSet> <!-- Create empty directory for the input-->
         <outputDirectory>/input/</outputDirectory>
