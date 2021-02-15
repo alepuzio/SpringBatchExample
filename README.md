@@ -13,3 +13,9 @@ The requirements:
 * all the input files in dir _input_
 * all the output files in dir _input_
 * all the script files in dir _script_
+
+## Features
+
+* Feature-5 per ora bloccata
+* prima uso spring-boot invece del main
+*
