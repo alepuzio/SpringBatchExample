@@ -22,11 +22,15 @@ public class ReportFieldSetMapper implements FieldSetMapper<Report> {
 
 	public Report mapFieldSet(FieldSet fieldSet) throws BindException {
 		Report report = new Report();
+		//businessLogic(fieldSet, report);
+		return report;
+	}
+
+	private void businessLogic(FieldSet fieldSet, Report report) {
 		report.setId(fieldSet.readInt(0));
 		report.setFirstName(fieldSet.readString(1));
 		report.setLastName(fieldSet.readString(2));
 		report.setDob(this.dateFormat.date(fieldSet.readString(3)));
-		return report;
 	}
 
 }
