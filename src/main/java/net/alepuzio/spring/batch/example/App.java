@@ -9,23 +9,23 @@ import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
-//@SpringBootApplication
-public class App /*implements CommandLineRunner */{
-//	@Autowired
-//	JobLauncher jobLauncher;
-//
-//	@Autowired
-//	Job job;
-//
-//	public static void main(String[] args) {
-//		SpringApplication.run(App.class, args);
-//	}
-//
-//	public void run(String... args) throws Exception {
-//		JobParameters params = new JobParametersBuilder()
-//				.addString("JobID", String.valueOf(System.currentTimeMillis()))
-//				.toJobParameters();
-//		jobLauncher.run(job, params);
-//	}
+@SpringBootApplication
+public class App implements CommandLineRunner {
 
+	public static void main(String[] args) {
+		SpringApplication.run(App.class, args);
+	}
+
+	@Autowired
+	JobLauncher jobLauncher;
+
+	@Autowired
+	Job job;
+
+	public void run(String... args) throws Exception {
+		JobParameters params = new JobParametersBuilder().addString("JobID", String.valueOf(System.currentTimeMillis()))
+				.toJobParameters();
+		jobLauncher.run(job, params);
+
+	}
 }

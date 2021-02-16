@@ -22,7 +22,7 @@ public class ReportFieldSetMapper implements FieldSetMapper<Report> {
 
 	public Report mapFieldSet(FieldSet fieldSet) throws BindException {
 		Report report = new Report();
-		//businessLogic(fieldSet, report);
+		businessLogic(fieldSet, report);
 		return report;
 	}
 

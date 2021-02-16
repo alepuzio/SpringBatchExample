@@ -12,7 +12,7 @@ public class CustomItemProcessor implements ItemProcessor<Report, Report> {
 
 	public Report process(Report item) throws Exception {
 		logger.info("Processing..." + item);
-//		businessLogic(item);
+		businessLogic(item);
 		return item;
 	}
 

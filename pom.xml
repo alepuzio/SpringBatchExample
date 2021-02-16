@@ -32,6 +32,12 @@
 			<version>1.4.200</version>
 		</dependency>
 
+	<!-- gestione CSV -->
+	     <dependency>
+            <groupId>com.opencsv</groupId>
+            <artifactId>opencsv</artifactId>
+            <version>${opencsv.version}</version>
+        </dependency>
 	</dependencies>
 
 	<build>
