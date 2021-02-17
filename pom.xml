@@ -39,12 +39,11 @@
 			<version>${opencsv.version}</version>
 		</dependency>
 
-		<!-- https://mvnrepository.com/artifact/org.apache.derby/derby -->
+		<!-- Derby database driver da https://www.youtube.com/watch?v=Y8InSLqLirc -->
 		<dependency>
 			<groupId>org.apache.derby</groupId>
 			<artifactId>derby</artifactId>
-			<version>10.15.2.0</version>
-			<scope>runtime</scope>
+			<version>10.14.2.0</version>
 		</dependency>
 
 	</dependencies>
