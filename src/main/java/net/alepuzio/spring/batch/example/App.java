@@ -28,7 +28,7 @@ public class App implements CommandLineRunner {
 
 		instance.info("Start at : "
 				+ new SimpleDateFormat("dd/MM/yyyy HH:mm:ss").format(Calendar.getInstance().getTimeInMillis()));
-		String[] springConfig = { "spring/batch/jobs/job-batch-demo.xml" };
+		String[] springConfig = { "./config/batch/job-batch-demo.xml" };
 		ClassPathXmlApplicationContext context = new ClassPathXmlApplicationContext(springConfig);
 		JobLauncher jobLauncher = (JobLauncher) context.getBean("jobLauncher");
 		Job job = (Job) context.getBean("DemoJobXMLWriter");

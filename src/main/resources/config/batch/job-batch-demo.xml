@@ -7,10 +7,10 @@
 		">
 
 
-	<import resource="./config/context.xml" />
-	<import resource="./config/database.xml" />
-	<import resource="./config/logback.xml" />
-
+	<import resource="./context.xml" />
+	<import resource="./database.xml" />
+<!-- 	<import resource="../logback.xml" />
+ -->
 	<bean id="report" class="net.alepuzio.spring.model.Report" scope="prototype" />
 	<bean id="itemProcessor" class="net.alepuzio.spring.batch.example.CustomItemProcessor" />
 
