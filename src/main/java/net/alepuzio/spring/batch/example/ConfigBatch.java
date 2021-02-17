@@ -22,31 +22,31 @@ import net.alepuzio.spring.model.Report;
 // @Import(DataSourceConfiguration.class)
 public class ConfigBatch {
 
-	@Autowired
-	private JobBuilderFactory jobs;
-
-	@Autowired
-	private StepBuilderFactory steps;
-
-	@Bean
-	public Job job(@Qualifier("readCSV") Step step1, @Qualifier("writeXML") Step step2) {
-		return jobs.get("myJob").start(step1).next(step2).build();
-	}
-
-	@Bean
-	protected Step readCSV(ItemReader<Report> reader,
-			ItemProcessor<Report, Report> processor/*
-													 * , ItemWriter<Report>
-													 * writer
-													 */) {
-		return steps.get("step1").<Report, Report> chunk(10).reader(reader).processor(processor)
-				/* .writer(writer) */
-				.build();
-	}
-
-	@Bean
-	protected Step writeXML(Tasklet tasklet) {
-		return steps.get("step2").tasklet(tasklet).build();
-	}
+//	@Autowired
+//	private JobBuilderFactory jobs;
+//
+//	@Autowired
+//	private StepBuilderFactory steps;
+//
+//	@Bean
+//	public Job job(@Qualifier("readCSV") Step step1, @Qualifier("writeXML") Step step2) {
+//		return jobs.get("myJob").start(step1).next(step2).build();
+//	}
+//
+//	@Bean
+//	protected Step readCSV(ItemReader<Report> reader,
+//			ItemProcessor<Report, Report> processor/*
+//													 * , ItemWriter<Report>
+//													 * writer
+//													 */) {
+//		return steps.get("step1").<Report, Report> chunk(10).reader(reader).processor(processor)
+//				/* .writer(writer) */
+//				.build();
+//	}
+//
+//	@Bean
+//	protected Step writeXML(Tasklet tasklet) {
+//		return steps.get("step2").tasklet(tasklet).build();
+//	}
 
 }
