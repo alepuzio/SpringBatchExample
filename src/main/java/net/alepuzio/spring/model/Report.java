@@ -52,7 +52,7 @@ public class Report {
 
 	@Override
 	public String toString() {
-		return "Report [id=" + id + ", firstname=" + firstName + ", lastName=" + lastName + ", DateOfBirth=" + dob
+		return "Report [id=" + id + ", firstname=" + firstName + ", lastName=" + lastName + ", DateOfBirth=" + new DateFormat("dd/MM/yyyy").ddMMyyyy(dob)
 				+ "]";
 	}
 
