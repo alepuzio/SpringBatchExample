@@ -18,11 +18,17 @@
 
 	<properties>
 		<jdk.version>1.8</jdk.version>
+		<java.version>1.8</java.version>
+		<maven.compiler.source>${java.version}</maven.compiler.source>
+		<maven.compiler.target>${java.version}</maven.compiler.target>
+
 		<spring.version>4.3.12.RELEASE</spring.version>
 		<spring.batch.version>3.0.8.RELEASE</spring.batch.version>
 		<junit.version>4.11</junit.version>
 		<opencsv.version>4.1</opencsv.version>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+		<properties>
+		</properties>
 	</properties>
 	<dependencies>
 

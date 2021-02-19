@@ -12,7 +12,7 @@ public class ReportFieldSetMapper implements FieldSetMapper<Report> {
 	private DateFormat dateFormat;
 
 	ReportFieldSetMapper() {
-		this.dateFormat = new DateFormat("yyyy-MM-dd");/* HH:mm:ss//*/
+		this.dateFormat = new DateFormat("yyyy-MM-dd");
 	}
 
 	@Override
@@ -23,10 +23,18 @@ public class ReportFieldSetMapper implements FieldSetMapper<Report> {
 	}
 
 	private void businessLogic(FieldSet fieldSet, Report report) {
-		report.setId(fieldSet.readInt(0));
-		report.setFirstName(fieldSet.readString(1));
-		report.setLastName(fieldSet.readString(2));
-		report.setDob(/*this.dateFormat.ddMMyyyy*/(this.dateFormat.date(fieldSet.readString(3))));
+//		report.setId(fieldSet.readInt(0));
+//		report.setFirstName(fieldSet.readString(1));
+//		report.setLastName(fieldSet.readString(2));
+//		report.setDob(this.dateFormat.date(fieldSet.readString(3)));
+		
+		report.setId(fieldSet.readInt("Id"));
+		report.setFirstName(fieldSet.readString("Name"));
+		report.setLastName(fieldSet.readString("Surname"));
+		report.setDob(fieldSet.readDate("Date","yyyy-MM-dd")
+				/*this.dateFormat.date(fieldSet.readString(3))*/
+				);
+		
 	}
 
 }
