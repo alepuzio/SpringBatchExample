@@ -1,9 +1,5 @@
 package net.alepuzio.spring.batch.example;
 
-import java.io.File;
-import java.util.HashMap;
-import java.util.Map;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.batch.core.Job;
@@ -19,16 +15,14 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.io.ClassPathResource;
-import org.springframework.core.io.FileSystemResource;
-import org.springframework.oxm.xstream.XStreamMarshaller;
 
+import net.alepuzio.spring.batch.processing.XMLOutput;
 import net.alepuzio.spring.model.Report;
 import net.alepuzio.spring.model.Upper;
 
 @Configuration
 public class ConfigBatch {
 
-	private  Logger log = LoggerFactory.getLogger(this.getClass());
 	@Autowired
 	private JobBuilderFactory jobs;
 
@@ -63,7 +57,7 @@ public class ConfigBatch {
 	@Bean
 	public Step step3() throws Exception {
 		return stepBuilderFactory.get("step3")
-				.<Report, Report>chunk(10)
+				.<Report, Report>chunk(2)
 				.reader(readCSV())
 				.writer(customerItemWriter())
 				.build();
@@ -101,22 +95,7 @@ public class ConfigBatch {
 
 	@Bean
 	public StaxEventItemWriter<Report> customerItemWriter() throws Exception {
-		XStreamMarshaller marshaller = new XStreamMarshaller();
-		Map<String, Class> aliases = new HashMap<>();
-		aliases.put("customer", Report.class);
-		marshaller.setAliases(aliases);
-		StaxEventItemWriter<Report> itemWriter = new StaxEventItemWriter<>();
-		itemWriter.setRootTagName("customers");
-		itemWriter.setMarshaller(marshaller);
-		File outputFile = new File(".\\customerOutput.xml");
-		outputFile.createNewFile();
-		String customerOutputPath = outputFile.getAbsolutePath();
-		String msg = ">> Output Path: " + customerOutputPath;
-		System.out.println(msg);
-		log.info(msg);
-		itemWriter.setResource(new FileSystemResource(customerOutputPath));
-		itemWriter.afterPropertiesSet();
-		return itemWriter;
+		return new XMLOutput().customerItemWriter();
 	}
 
 
