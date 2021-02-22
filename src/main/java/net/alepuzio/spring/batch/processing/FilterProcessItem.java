@@ -15,7 +15,12 @@ public class FilterProcessItem implements ItemProcessor<Report, Report> {
 		if (0 == ( item.getId()%2)){
 			newItem = item;
 		} else {
-			log.warn(String.format("item non valido", item));
+			log.warn(String.format("Raddoppio ID di item %s", item));
+			newItem = new Report();
+			newItem.setId((item.getId()*2));
+			newItem.setDob(item.getDob());
+			newItem.setFirstName(item.getFirstName());
+			newItem.setLastName(item.getLastName());
 		}
 		return newItem;
 	}

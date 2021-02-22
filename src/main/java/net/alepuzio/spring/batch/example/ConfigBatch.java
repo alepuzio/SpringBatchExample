@@ -10,6 +10,7 @@ import org.springframework.batch.item.ItemWriter;
 import org.springframework.batch.item.file.FlatFileItemReader;
 import org.springframework.batch.item.file.mapping.DefaultLineMapper;
 import org.springframework.batch.item.file.transform.DelimitedLineTokenizer;
+import org.springframework.batch.item.validator.ValidatingItemProcessor;
 import org.springframework.batch.item.xml.StaxEventItemWriter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
@@ -17,6 +18,7 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.core.io.ClassPathResource;
 
 import net.alepuzio.spring.batch.processing.FilterProcessItem;
+import net.alepuzio.spring.batch.processing.ReportValidator;
 import net.alepuzio.spring.batch.processing.XMLOutput;
 import net.alepuzio.spring.model.Report;
 import net.alepuzio.spring.model.Upper;
@@ -54,6 +56,7 @@ public class ConfigBatch {
 		return stepBuilderFactory.get("step52")
 				.<Report, Report>chunk(10)
 				.reader(readCSV())
+				.processor(itemValidator())
 				.processor(iterProcessor())
 				.writer(writeXML())
 				.build();
@@ -88,6 +91,11 @@ public class ConfigBatch {
 	@Bean
 	public FilterProcessItem iterProcessor(){
 		return new FilterProcessItem();
+	}
+	
+	@Bean
+	public ValidatingItemProcessor<Report> itemValidator(){
+		return new ValidatingItemProcessor<>(new ReportValidator()); 
 	}
 
 	@Bean
