@@ -8,15 +8,13 @@ import org.springframework.batch.core.configuration.annotation.JobBuilderFactory
 import org.springframework.batch.core.configuration.annotation.StepBuilderFactory;
 import org.springframework.batch.item.ItemWriter;
 import org.springframework.batch.item.file.FlatFileItemReader;
-import org.springframework.batch.item.file.mapping.DefaultLineMapper;
-import org.springframework.batch.item.file.transform.DelimitedLineTokenizer;
 import org.springframework.batch.item.validator.ValidatingItemProcessor;
 import org.springframework.batch.item.xml.StaxEventItemWriter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.core.io.ClassPathResource;
 
+import net.alepuzio.spring.batch.processing.CSVInput;
 import net.alepuzio.spring.batch.processing.FilterProcessItem;
 import net.alepuzio.spring.batch.processing.ReportValidator;
 import net.alepuzio.spring.batch.processing.XMLOutput;
@@ -102,17 +100,11 @@ public class ConfigBatch {
 
 	@Bean
 	public FlatFileItemReader<Report> readCSV() {
-		FlatFileItemReader<Report> reader = new FlatFileItemReader<Report>();
-		reader.setLinesToSkip(1);
-		reader.setResource(new ClassPathResource("input/csv/report.csv"));
-		DefaultLineMapper<Report> customerLineMapper = new DefaultLineMapper<Report>();
-		DelimitedLineTokenizer tokenizer = new DelimitedLineTokenizer();
-		tokenizer.setNames(new String[] { "Id", "Name", "Surname", "Date" });//inutile se accede a fieldset con posizione e non nome campo
-		customerLineMapper.setLineTokenizer(tokenizer);
-		customerLineMapper.setFieldSetMapper(new ReportFieldSetMapper());
-		customerLineMapper.afterPropertiesSet();
-		reader.setLineMapper(customerLineMapper);
-		return reader;
+		return csv();
+	}
+
+	private FlatFileItemReader<Report> csv() {
+		return new CSVInput().customers();
 	}
 
 	@Bean

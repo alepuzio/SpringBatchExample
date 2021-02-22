@@ -8,7 +8,7 @@ import java.util.Map;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.batch.item.xml.StaxEventItemWriter;
-import org.springframework.context.annotation.Bean;
+//import org.springframework.context.annotation.Bean;
 import org.springframework.core.io.FileSystemResource;
 import org.springframework.oxm.xstream.XStreamMarshaller;
 
@@ -20,7 +20,7 @@ public class XMLOutput {
 	private final String root = "customers";
 	private final String fileName = ".\\outputs\\xml\\customerOutput.xml";
 	
-	@Bean
+	//@Bean
 	public StaxEventItemWriter<Report> customerItemWriter(String numberFile) throws Exception {
 		StaxEventItemWriter<Report> itemWriter = new StaxEventItemWriter<>();
 		itemWriter.setRootTagName(this.root);

@@ -14,7 +14,7 @@ public class ReportFieldSetMapper implements FieldSetMapper<Report> {
 	private DateFormat dateFormat;
 	private Logger log = LoggerFactory.getLogger(this.getClass());
 
-	ReportFieldSetMapper() {
+	public ReportFieldSetMapper() {
 		this.dateFormat = new DateFormat("yyyy-MM-dd");
 	}
 
