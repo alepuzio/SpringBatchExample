@@ -6,26 +6,20 @@
 		http://www.springframework.org/schema/jdbc/spring-jdbc-4.3.xsd">
 
 	<!-- connect to database -->
-	<bean id="dataSource"
-		class="org.springframework.jdbc.datasource.DriverManagerDataSource">
+	<bean id="dataSource"	class="org.springframework.jdbc.datasource.DriverManagerDataSource"><!-- questa classe crea una connessione ogni volta -->
 		<property name="driverClassName" value="org.apache.derby.jdbc.ClientDriver" />
-		<property name="url"
-			value="jdbc:derby://localhost:1527/spring_batch;" /><!-- create=true -->
-		<property name="username" value="test" />
-		<property name="password" value="test123_" />
+		<property name="url" value="jdbc:derby://loc_alhost:1527/my_spring_batch;" />
+		<property name="username" value="as_you_want" />
+		<property name="password" value="as_you_want_123" />
 	</bean>
 
 <!-- il nome dell'ID e' statico perche' richiamato da altri oggetti Spring
 per modificare la classe in base all'ambiente ci vuole file di properties -->
 	<bean id="transactionManager"		class="org.springframework.batch.support.transaction.ResourcelessTransactionManager" />
-	
-	<!-- 
-	bean id="transactionManagerProd"		class="org.springframework.jdbc.datasource.DataSourceTransactionManager" /
-	-->
-
+	<!-- jdbc:embedded-database mi permette di non avere un database esterno cui collegarmi, utile per sviluppo locale -->
+	<!-- type ha un intervallo di valori limitato -->
 	<jdbc:embedded-database id="dataSource" type="DERBY">
-		<jdbc:script location="classpath:script/create-user-table.sql" />
-		<jdbc:script location="classpath:script/create-db.sql" />
-		<jdbc:script location="classpath:script/insert-data.sql" />
+		<jdbc:script location="classpath:script/db/create-db.sql" />
 	</jdbc:embedded-database>
-</beans>
+ 
+ </beans>
