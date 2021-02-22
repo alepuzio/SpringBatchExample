@@ -16,6 +16,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.io.ClassPathResource;
 
+import net.alepuzio.spring.batch.processing.FilterProcessItem;
 import net.alepuzio.spring.batch.processing.XMLOutput;
 import net.alepuzio.spring.model.Report;
 import net.alepuzio.spring.model.Upper;
@@ -23,6 +24,8 @@ import net.alepuzio.spring.model.Upper;
 @Configuration
 public class ConfigBatch {
 
+	private Logger log = LoggerFactory.getLogger(this.getClass());
+	
 	@Autowired
 	private JobBuilderFactory jobs;
 
@@ -51,6 +54,7 @@ public class ConfigBatch {
 		return stepBuilderFactory.get("step52")
 				.<Report, Report>chunk(10)
 				.reader(readCSV())
+				.processor(iterProcessor())
 				.writer(writeXML())
 				.build();
 	}
@@ -70,12 +74,20 @@ public class ConfigBatch {
 		int count = 0;
 		return items -> {
 			for (Report item : items) {
-				item.setFirstName(new Upper(item.getFirstName()).value());
-				item.setLastName(new Upper(item.getLastName()).value());
-				System.out.println(String.format("[%s]>%s",count,item.toString()));
+				Report newItem = new Report();
+				newItem.setId(item.getId());
+				newItem.setFirstName(new Upper(item.getFirstName()).value());
+				newItem.setLastName(new Upper(item.getLastName()).value());
+				//System.out.println(String.format("[%s]>%s",count,item.toString()));
+				log.info(String.format("[%s]>%s",count,item.toString()));
 		//		count++; deve essere final
 			}
 		};
+	}
+	
+	@Bean
+	public FilterProcessItem iterProcessor(){
+		return new FilterProcessItem();
 	}
 
 	@Bean

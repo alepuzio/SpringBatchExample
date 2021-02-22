@@ -20,7 +20,7 @@
 			-->
 <!-- 	fileNamePattern>C:\\Users\apuzielli\Documents\personale\mio-github\java\SpringBatchExample\target\SpringBatchExample-0.0.3\logs\log-%d{yyyy-MM-dd}.log
 	</fileNamePattern
- -->			<fileNamePattern>.\logs\log-%d{yyyy-MM-dd}.log</fileNamePattern>
+ -->			<fileNamePattern>./log-%d{yyyy-MM-dd}.log</fileNamePattern>
 			<maxHistory>30</maxHistory>
 			<totalSizeCap>1GB</totalSizeCap>
 		</rollingPolicy>

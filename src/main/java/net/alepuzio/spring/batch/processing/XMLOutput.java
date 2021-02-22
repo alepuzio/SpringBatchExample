@@ -27,6 +27,7 @@ public class XMLOutput {
 		itemWriter.setMarshaller(marshaller());
 		itemWriter.setResource(new FileSystemResource(createFile()));
 		itemWriter.afterPropertiesSet();
+		log.info(String.format("Scritto file sui dati %s", this.root ));
 		return itemWriter;
 	}
 
