@@ -21,11 +21,11 @@ public class XMLOutput {
 	private final String fileName = ".\\outputs\\xml\\customerOutput.xml";
 	
 	@Bean
-	public StaxEventItemWriter<Report> customerItemWriter() throws Exception {
+	public StaxEventItemWriter<Report> customerItemWriter(String numberFile) throws Exception {
 		StaxEventItemWriter<Report> itemWriter = new StaxEventItemWriter<>();
 		itemWriter.setRootTagName(this.root);
 		itemWriter.setMarshaller(marshaller());
-		itemWriter.setResource(new FileSystemResource(createFile()));
+		itemWriter.setResource(new FileSystemResource(createFile(numberFile)));
 		itemWriter.afterPropertiesSet();
 		log.info(String.format("Scritto file sui dati %s", this.root ));
 		return itemWriter;
@@ -44,8 +44,8 @@ public class XMLOutput {
 		return aliases;
 	}
 
-	private String createFile() throws IOException {
-		File outputFile = new File(this.fileName);
+	private String createFile(String numberFile) throws IOException {
+		File outputFile = new File(String.format("%s_%s",this.fileName, numberFile));
 		outputFile.createNewFile();
 		String customerOutputPath = outputFile.getAbsolutePath();
 		log.info(String.format(">> Output Path: %s",customerOutputPath));

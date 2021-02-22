@@ -48,7 +48,8 @@ public class ConfigBatch {
 		return stepBuilderFactory.get("step1")
 				.<Report, Report>chunk(10)
 				.reader(readCSV())
-				.writer(writeXML())
+				.processor(iterProcessor())
+				.writer(writeXML("first"))
 				.build();
 	}
 	@Bean
@@ -56,9 +57,7 @@ public class ConfigBatch {
 		return stepBuilderFactory.get("step52")
 				.<Report, Report>chunk(10)
 				.reader(readCSV())
-				.processor(itemValidator())
-				.processor(iterProcessor())
-				.writer(writeXML())
+				.writer(writeXML("second"))
 				.build();
 	}
 	@Bean
@@ -66,14 +65,15 @@ public class ConfigBatch {
 		return stepBuilderFactory.get("step3")
 				.<Report, Report>chunk(2)
 				.reader(readCSV())
-				.writer(customerItemWriter())
+				.processor(itemValidator())
+				.writer(customerItemWriter("third"))
 				.build();
 	}
 	
 	
 
 	@Bean
-	public ItemWriter<Report> writeXML() {
+	public ItemWriter<Report> writeXML(String numberFile) {
 		int count = 0;
 		return items -> {
 			for (Report item : items) {
@@ -95,7 +95,9 @@ public class ConfigBatch {
 	
 	@Bean
 	public ValidatingItemProcessor<Report> itemValidator(){
-		return new ValidatingItemProcessor<>(new ReportValidator()); 
+		ValidatingItemProcessor<Report> reportValidatingItem = new ValidatingItemProcessor<>(new ReportValidator());
+		reportValidatingItem.setFilter(true);
+		return reportValidatingItem;
 	}
 
 	@Bean
@@ -114,8 +116,8 @@ public class ConfigBatch {
 	}
 
 	@Bean
-	public StaxEventItemWriter<Report> customerItemWriter() throws Exception {
-		return new XMLOutput().customerItemWriter();
+	public StaxEventItemWriter<Report> customerItemWriter(String numberFile) throws Exception {
+		return new XMLOutput().customerItemWriter(numberFile);
 	}
 
 
