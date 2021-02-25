@@ -36,9 +36,9 @@ public class ConfigBatch {
 	public Job job(Step step1, 
 			Step step2, Step step3) {
 		return jobs.get("myJob").start(step1)
-				.next(step2)
+/*				.next(step2)
 				.next(step3)
-				.build();
+	*/			.build();
 	}
 
 	@Bean
@@ -46,7 +46,7 @@ public class ConfigBatch {
 		return stepBuilderFactory.get("step1")
 				.<Report, Report>chunk(10)
 				.reader(readCSV())
-				.processor(iterProcessor())
+//				.processor(iterProcessor())
 				.writer(writeXML("first"))
 				.build();
 	}
@@ -100,12 +100,9 @@ public class ConfigBatch {
 
 	@Bean
 	public FlatFileItemReader<Report> readCSV() {
-		return csv();
-	}
-
-	private FlatFileItemReader<Report> csv() {
 		return new CSVInput().customers();
 	}
+
 
 	@Bean
 	public StaxEventItemWriter<Report> customerItemWriter(String numberFile) throws Exception {
