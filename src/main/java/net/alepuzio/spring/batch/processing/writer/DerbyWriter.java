@@ -22,6 +22,7 @@ public class DerbyWriter implements DBWriter {
 		itemWriter.setSql(sql);
 		itemWriter.setItemSqlParameterSourceProvider(new BeanPropertyItemSqlParameterSourceProvider<>());
 		itemWriter.afterPropertiesSet();
+
 		return itemWriter;
 	}
 

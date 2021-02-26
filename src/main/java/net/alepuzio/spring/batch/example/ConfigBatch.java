@@ -13,10 +13,13 @@ import org.springframework.batch.item.file.FlatFileItemReader;
 import org.springframework.batch.item.validator.ValidatingItemProcessor;
 import org.springframework.batch.item.xml.StaxEventItemWriter;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.env.Environment;
-import org.springframework.jdbc.datasource.DriverManagerDataSource;
+import org.springframework.core.io.ClassPathResource;
+import org.springframework.jdbc.datasource.init.DataSourceInitializer;
+import org.springframework.jdbc.datasource.init.ResourceDatabasePopulator;
 
 import net.alepuzio.spring.batch.processing.CSVInput;
 import net.alepuzio.spring.batch.processing.FilterProcessItem;
@@ -37,29 +40,29 @@ public class ConfigBatch {
 	@Autowired
 	private StepBuilderFactory stepBuilderFactory;
 
-	@Autowired
+	@Autowired//TODO spostare in configDerby
 	private DataSource dataSource;
 
-	
+//	@Bean
+//	public DataSourceInitializer dataSourceInitializer(@Qualifier("dataSource") final DataSource dataSource) {
+//		log.info("eseguito dataSourceInitializer");
+//		ResourceDatabasePopulator resourceDatabasePopulator = new ResourceDatabasePopulator();
+//	    resourceDatabasePopulator.addScript(new ClassPathResource("/script/db/create-db.sql"));
+//	    DataSourceInitializer dataSourceInitializer = new DataSourceInitializer();
+//	    dataSourceInitializer.setDataSource(dataSource);
+//	    dataSourceInitializer.setDatabasePopulator(resourceDatabasePopulator);
+//	    return dataSourceInitializer;
+//	}
+
 	@Bean
     public DataSource dataSource(Environment environment) {
-        /*String pw = environment.getProperty("dataSource.password"),
-                user = environment.getProperty("dataSource.user"),
-                url = environment.getProperty("dataSource.url");
-        Class<Driver> classOfDs = environment.getPropertyAsClass("dataSource.driverClass", Driver.class);
-
-        SimpleDriverDataSource dataSource = new SimpleDriverDataSource();
-        dataSource.setPassword(pw);
-        dataSource.setUrl(url);
-        dataSource.setUsername(user);
-        dataSource.setDriverClass(classOfDs);
-        return dataSource;*/
-		return new ConfigDerby(environment).batchDataSource();
+        return new ConfigDerby(environment).batchDataSource();
     }
 
 	@Bean
 	public Job job(Step step1, Step step2, Step step3, Step step4) {
-		return jobs.get("myJob").start(step1)
+		return jobs.get("myJob")
+				.start(step1)
 				/*
 				 * .next(step2) .next(step3)
 				 */
@@ -86,7 +89,10 @@ public class ConfigBatch {
 
 	@Bean
 	public Step step4() throws Exception {
-		return stepBuilderFactory.get("step4").<Report, Report> chunk(5).reader(readCSV()).processor(itemValidator())
+		return stepBuilderFactory.get("step4").
+				<Report, Report> chunk(5)
+				.reader(readCSV())
+				.processor(itemValidator())
 				.writer(derbyWriter()).build();
 	}
 
