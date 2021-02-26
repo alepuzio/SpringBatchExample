@@ -20,6 +20,7 @@ per modificare la classe in base all'ambiente ci vuole file di properties -->
 	<!-- type ha un intervallo di valori limitato -->
 	<jdbc:embedded-database id="dataSource" type="DERBY">
 		<jdbc:script location="classpath:script/db/create-db.sql" />
+		<jdbc:script location="classpath:script/db/create-db-report.sql" />
 	</jdbc:embedded-database>
  
  </beans>

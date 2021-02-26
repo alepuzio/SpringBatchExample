@@ -1,0 +1,9 @@
+  develop                       556b401 il sv di input ha ora 1000 righe
+  feature-4-spring-batch        d72f276 blocked feature in Readme
+  feature-5-indipendent-package 85aec39 non includo in lib l'artifact
+  feature-6-spring-boot         10fc392 refactoring minore
+* feature-use-db-derby          556b401 il sv di input ha ora 1000 righe
+  feature_1_log                 a48349b refactoring
+  feature_2_refactor_OOP        01755f6 version 0.0.3 refactoing OOP and log execution infos
+  feature_3_analisys            4c6017a added comments and refactoring
+  master                        250194f Merge branch 'develop': version 0.0.4 use Spring Boot

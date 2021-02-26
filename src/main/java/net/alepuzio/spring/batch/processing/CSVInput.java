@@ -7,7 +7,7 @@ import org.springframework.batch.item.file.mapping.DefaultLineMapper;
 import org.springframework.batch.item.file.transform.DelimitedLineTokenizer;
 import org.springframework.core.io.ClassPathResource;
 
-import net.alepuzio.spring.batch.example.ReportFieldSetMapper;
+import net.alepuzio.spring.batch.processing.mapper.ReportFieldSetMapper;
 import net.alepuzio.spring.model.Report;
 
 public class CSVInput {

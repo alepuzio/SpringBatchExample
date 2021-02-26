@@ -1,5 +1,7 @@
 package net.alepuzio.spring.batch.example;
 
+import javax.sql.DataSource;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.batch.core.Job;
@@ -17,7 +19,8 @@ import org.springframework.context.annotation.Configuration;
 import net.alepuzio.spring.batch.processing.CSVInput;
 import net.alepuzio.spring.batch.processing.FilterProcessItem;
 import net.alepuzio.spring.batch.processing.ReportValidator;
-import net.alepuzio.spring.batch.processing.XMLOutput;
+import net.alepuzio.spring.batch.processing.writer.DerbyWriter;
+import net.alepuzio.spring.batch.processing.writer.XMLOutput;
 import net.alepuzio.spring.model.Report;
 import net.alepuzio.spring.model.Upper;
 
@@ -31,6 +34,9 @@ public class ConfigBatch {
 
 	@Autowired
 	private StepBuilderFactory stepBuilderFactory;
+
+	@Autowired
+	private DataSource dataSource;
 
 	@Bean
 	public Job job(Step step1, 
@@ -68,6 +74,15 @@ public class ConfigBatch {
 				.build();
 	}
 	
+	@Bean
+	public Step step4() throws Exception {
+		return stepBuilderFactory.get("step4")
+				.<Report, Report>chunk(5)
+				.reader(readCSV())
+				.processor(itemValidator())
+				.writer(derbyWriter())
+				.build();
+	}
 	
 
 	@Bean
@@ -109,5 +124,9 @@ public class ConfigBatch {
 		return new XMLOutput().customerItemWriter(numberFile);
 	}
 
+	@Bean
+	public ItemWriter<? super Report> derbyWriter() throws Exception {
+		return new DerbyWriter().row(this.dataSource);
+	}
 
 }
