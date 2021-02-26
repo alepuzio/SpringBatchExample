@@ -8,19 +8,19 @@
 	<!-- connect to database -->
 	<bean id="dataSource"	class="org.springframework.jdbc.datasource.DriverManagerDataSource"><!-- questa classe crea una connessione ogni volta -->
 		<property name="driverClassName" value="org.apache.derby.jdbc.ClientDriver" />
-		<property name="url" value="jdbc:derby://loc_alhost:1527/my_spring_batch;" />
+		<property name="url" value="jdbc:derby://localhost:1527/my_spring_batch;" />
 		<property name="username" value="as_you_want" />
 		<property name="password" value="as_you_want_123" />
 	</bean>
 
 <!-- il nome dell'ID e' statico perche' richiamato da altri oggetti Spring
 per modificare la classe in base all'ambiente ci vuole file di properties -->
-	<bean id="transactionManager"		class="org.springframework.batch.support.transaction.ResourcelessTransactionManager" />
+	<bean id="transactioqqqqqqqnManager"		class="org.springframework.batch.support.transaction.ResourcelessTransactionManager" />
 	<!-- jdbc:embedded-database mi permette di non avere un database esterno cui collegarmi, utile per sviluppo locale -->
 	<!-- type ha un intervallo di valori limitato -->
-	<jdbc:embedded-database id="dataSource" type="DERBY">
+	<jdbc:embedded-database_ id="dataSource" type="DERBY">
 		<jdbc:script location="classpath:script/db/create-db.sql" />
 		<jdbc:script location="classpath:script/db/create-db-report.sql" />
-	</jdbc:embedded-database>
+	</jdbc:embedded-database_>
  
  </beans>

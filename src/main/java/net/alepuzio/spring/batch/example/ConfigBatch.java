@@ -15,6 +15,8 @@ import org.springframework.batch.item.xml.StaxEventItemWriter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.core.env.Environment;
+import org.springframework.jdbc.datasource.DriverManagerDataSource;
 
 import net.alepuzio.spring.batch.processing.CSVInput;
 import net.alepuzio.spring.batch.processing.FilterProcessItem;
@@ -28,7 +30,7 @@ import net.alepuzio.spring.model.Upper;
 public class ConfigBatch {
 
 	private Logger log = LoggerFactory.getLogger(this.getClass());
-	
+
 	@Autowired
 	private JobBuilderFactory jobs;
 
@@ -38,52 +40,55 @@ public class ConfigBatch {
 	@Autowired
 	private DataSource dataSource;
 
+	
 	@Bean
-	public Job job(Step step1, 
-			Step step2, Step step3) {
+    public DataSource dataSource(Environment environment) {
+        /*String pw = environment.getProperty("dataSource.password"),
+                user = environment.getProperty("dataSource.user"),
+                url = environment.getProperty("dataSource.url");
+        Class<Driver> classOfDs = environment.getPropertyAsClass("dataSource.driverClass", Driver.class);
+
+        SimpleDriverDataSource dataSource = new SimpleDriverDataSource();
+        dataSource.setPassword(pw);
+        dataSource.setUrl(url);
+        dataSource.setUsername(user);
+        dataSource.setDriverClass(classOfDs);
+        return dataSource;*/
+		return new ConfigDerby(environment).batchDataSource();
+    }
+
+	@Bean
+	public Job job(Step step1, Step step2, Step step3, Step step4) {
 		return jobs.get("myJob").start(step1)
-/*				.next(step2)
-				.next(step3)
-	*/			.build();
+				/*
+				 * .next(step2) .next(step3)
+				 */
+				.next(step4).build();
 	}
 
 	@Bean
 	public Step step1() {
-		return stepBuilderFactory.get("step1")
-				.<Report, Report>chunk(10)
-				.reader(readCSV())
-//				.processor(iterProcessor())
-				.writer(writeXML("first"))
-				.build();
+		return stepBuilderFactory.get("step1").<Report, Report> chunk(10).reader(readCSV()).processor(iterProcessor())
+				.writer(writeXML("first")).build();
 	}
+
 	@Bean
 	public Step step2() {
-		return stepBuilderFactory.get("step52")
-				.<Report, Report>chunk(10)
-				.reader(readCSV())
-				.writer(writeXML("second"))
+		return stepBuilderFactory.get("step52").<Report, Report> chunk(10).reader(readCSV()).writer(writeXML("second"))
 				.build();
 	}
+
 	@Bean
 	public Step step3() throws Exception {
-		return stepBuilderFactory.get("step3")
-				.<Report, Report>chunk(2)
-				.reader(readCSV())
-				.processor(itemValidator())
-				.writer(customerItemWriter("third"))
-				.build();
+		return stepBuilderFactory.get("step3").<Report, Report> chunk(2).reader(readCSV()).processor(itemValidator())
+				.writer(customerItemWriter("third")).build();
 	}
-	
+
 	@Bean
 	public Step step4() throws Exception {
-		return stepBuilderFactory.get("step4")
-				.<Report, Report>chunk(5)
-				.reader(readCSV())
-				.processor(itemValidator())
-				.writer(derbyWriter())
-				.build();
+		return stepBuilderFactory.get("step4").<Report, Report> chunk(5).reader(readCSV()).processor(itemValidator())
+				.writer(derbyWriter()).build();
 	}
-	
 
 	@Bean
 	public ItemWriter<Report> writeXML(String numberFile) {
@@ -94,20 +99,20 @@ public class ConfigBatch {
 				newItem.setId(item.getId());
 				newItem.setFirstName(new Upper(item.getFirstName()).value());
 				newItem.setLastName(new Upper(item.getLastName()).value());
-				//System.out.println(String.format("[%s]>%s",count,item.toString()));
-				log.info(String.format("[%s]>%s",count,item.toString()));
-		//		count++; deve essere final
+				// System.out.println(String.format("[%s]>%s",count,item.toString()));
+				log.info(String.format("[%s]>%s", count, item.toString()));
+				// count++; deve essere final
 			}
 		};
 	}
-	
+
 	@Bean
-	public FilterProcessItem iterProcessor(){
+	public FilterProcessItem iterProcessor() {
 		return new FilterProcessItem();
 	}
-	
+
 	@Bean
-	public ValidatingItemProcessor<Report> itemValidator(){
+	public ValidatingItemProcessor<Report> itemValidator() {
 		ValidatingItemProcessor<Report> reportValidatingItem = new ValidatingItemProcessor<>(new ReportValidator());
 		reportValidatingItem.setFilter(true);
 		return reportValidatingItem;
@@ -118,7 +123,6 @@ public class ConfigBatch {
 		return new CSVInput().customers();
 	}
 
-
 	@Bean
 	public StaxEventItemWriter<Report> customerItemWriter(String numberFile) throws Exception {
 		return new XMLOutput().customerItemWriter(numberFile);
@@ -126,6 +130,7 @@ public class ConfigBatch {
 
 	@Bean
 	public ItemWriter<? super Report> derbyWriter() throws Exception {
+		log.info("Scrittura su db");
 		return new DerbyWriter().row(this.dataSource);
 	}
 

@@ -27,7 +27,6 @@ public class CSVInput {
 
 	private DefaultLineMapper<Report> lineMapper() {
 		DelimitedLineTokenizer tokenizer = lineTokenizer();
-
 		DefaultLineMapper<Report> customerLineMapper = new DefaultLineMapper<Report>();
 		customerLineMapper.setLineTokenizer(tokenizer);
 		customerLineMapper.setFieldSetMapper(new ReportFieldSetMapper());
