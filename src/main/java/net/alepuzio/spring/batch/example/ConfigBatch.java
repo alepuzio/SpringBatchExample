@@ -13,18 +13,14 @@ import org.springframework.batch.item.file.FlatFileItemReader;
 import org.springframework.batch.item.validator.ValidatingItemProcessor;
 import org.springframework.batch.item.xml.StaxEventItemWriter;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.env.Environment;
-import org.springframework.core.io.ClassPathResource;
-import org.springframework.jdbc.datasource.init.DataSourceInitializer;
-import org.springframework.jdbc.datasource.init.ResourceDatabasePopulator;
 
 import net.alepuzio.spring.batch.processing.CSVInput;
 import net.alepuzio.spring.batch.processing.FilterProcessItem;
 import net.alepuzio.spring.batch.processing.ReportValidator;
-import net.alepuzio.spring.batch.processing.writer.DerbyWriter;
+import net.alepuzio.spring.batch.processing.writer.H2Writer;
 import net.alepuzio.spring.batch.processing.writer.XMLOutput;
 import net.alepuzio.spring.model.Report;
 import net.alepuzio.spring.model.Upper;
@@ -40,23 +36,12 @@ public class ConfigBatch {
 	@Autowired
 	private StepBuilderFactory stepBuilderFactory;
 
-	@Autowired//TODO spostare in configDerby
+	@Autowired//TODO spostare in configH2
 	private DataSource dataSource;
-
-//	@Bean
-//	public DataSourceInitializer dataSourceInitializer(@Qualifier("dataSource") final DataSource dataSource) {
-//		log.info("eseguito dataSourceInitializer");
-//		ResourceDatabasePopulator resourceDatabasePopulator = new ResourceDatabasePopulator();
-//	    resourceDatabasePopulator.addScript(new ClassPathResource("/script/db/create-db.sql"));
-//	    DataSourceInitializer dataSourceInitializer = new DataSourceInitializer();
-//	    dataSourceInitializer.setDataSource(dataSource);
-//	    dataSourceInitializer.setDatabasePopulator(resourceDatabasePopulator);
-//	    return dataSourceInitializer;
-//	}
 
 	@Bean
     public DataSource dataSource(Environment environment) {
-        return new ConfigDerby(environment).batchDataSource();
+        return new ConfigH2(environment).batchDataSource();
     }
 
 	@Bean
@@ -93,7 +78,7 @@ public class ConfigBatch {
 				<Report, Report> chunk(5)
 				.reader(readCSV())
 				.processor(itemValidator())
-				.writer(derbyWriter()).build();
+				.writer(h2Writer()).build();
 	}
 
 	@Bean
@@ -135,9 +120,9 @@ public class ConfigBatch {
 	}
 
 	@Bean
-	public ItemWriter<? super Report> derbyWriter() throws Exception {
+	public ItemWriter<? super Report> h2Writer() throws Exception {
 		log.info("Scrittura su db");
-		return new DerbyWriter().row(this.dataSource);
+		return new H2Writer().row(this.dataSource);
 	}
 
 }

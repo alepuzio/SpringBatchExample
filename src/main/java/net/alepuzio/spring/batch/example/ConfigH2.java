@@ -10,7 +10,7 @@ import org.springframework.core.io.ClassPathResource;
 import org.springframework.jdbc.datasource.DriverManagerDataSource;
 import org.springframework.jdbc.datasource.init.ResourceDatabasePopulator;
 
-public class ConfigDerby {
+public class ConfigH2 {
 
 	private Environment env;
 	private Logger log = LoggerFactory.getLogger(this.getClass());
@@ -18,17 +18,11 @@ public class ConfigDerby {
 	@Bean
 	public DataSource batchDataSource() {
 		log.info("eseguito batchDataSource");
-		ResourceDatabasePopulator resourceDatabasePopulator = new ResourceDatabasePopulator();
-	    resourceDatabasePopulator.addScript(new ClassPathResource("/script/db/2-create-db.sql"));
-	    log.info("eseguita creazione tabelle spring abtch");
-	    resourceDatabasePopulator.addScript(new ClassPathResource("/script/db/3-create-db-report.sql"));
-	    log.info("eseguita creazione tabelle dominio");
-	    
 		return datasource();
 	}
 
 	
-	ConfigDerby(Environment newEnv){
+	ConfigH2(Environment newEnv){
 		this.env = newEnv;
 	}
 

@@ -17,28 +17,15 @@ public class InitializeData {
 
 	@EventListener(ApplicationReadyEvent.class)
 	public void loadData() {
-		//dropTableDomain();
 		
-	//	domainTable();
-		
-		domainData();
+		scriptInitialization("1-create-table-spring-batch.sql");
+		scriptInitialization("2-delete-db.sql");
+		scriptInitialization("3-create-db-report.sql");
 	}
 
-	private void domainTable() {
+	private void scriptInitialization(String relativePath) {
 		ResourceDatabasePopulator resourceDatabasePopulator = 
-				resourceDatabasePopulatorFailFirstNotIgnoreFailesDropUTF8("/script/db/2-create-db.sql");
-		resourceDatabasePopulator.execute(dataSource);
-	}
-
-	private void dropTableDomain() {
-		ResourceDatabasePopulator resourceDatabasePopulator = 
-				resourceDatabasePopulatorFailFirstNotIgnoreFailesDropUTF8("/script/db/1-delete-db.sql");
-		resourceDatabasePopulator.execute(dataSource);
-	}
-
-	private void domainData() {
-		ResourceDatabasePopulator resourceDatabasePopulator = 
-				resourceDatabasePopulatorFailFirstNotIgnoreFailesDropUTF8("/script/db/3-create-db-report.sql");
+				resourceDatabasePopulatorFailFirstNotIgnoreFailesDropUTF8(String.format("/script/db/%s",relativePath));
 		resourceDatabasePopulator.execute(dataSource);
 	}
 

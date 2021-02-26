@@ -10,7 +10,7 @@ import org.springframework.batch.item.database.JdbcBatchItemWriter;
 
 import net.alepuzio.spring.model.Report;
 
-public class DerbyWriter implements DBWriter {
+public class H2Writer implements DBWriter {
 
 	private final String sql = "INSERT INTO REPORT VALUES(:id, :firstName, :lastName, :dob )";
 	
@@ -22,7 +22,6 @@ public class DerbyWriter implements DBWriter {
 		itemWriter.setSql(sql);
 		itemWriter.setItemSqlParameterSourceProvider(new BeanPropertyItemSqlParameterSourceProvider<>());
 		itemWriter.afterPropertiesSet();
-
 		return itemWriter;
 	}
 
