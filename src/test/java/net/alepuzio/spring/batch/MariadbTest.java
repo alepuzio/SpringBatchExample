@@ -21,7 +21,7 @@ public class MariadbTest {
 	@Before
 	public void before() {
 		try {
-			Class.forName("org.mariadb.jdbc.Driver");
+			Class.forName(MariaDbEnum.JDBC_DRIVER.value());
 			System.out.println("Connecting to a selected database...");
 			conn = DriverManager.getConnection( MariaDbEnum.DB_URL. value(), MariaDbEnum.USER. value(), MariaDbEnum.PASS. value());
 			System.out.println("Connected database successfully...");
