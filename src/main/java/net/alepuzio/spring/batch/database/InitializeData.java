@@ -9,6 +9,9 @@ import org.springframework.core.io.ClassPathResource;
 import org.springframework.jdbc.datasource.init.ResourceDatabasePopulator;
 import org.springframework.stereotype.Component;
 
+/**
+ * @overview: run dayabase script
+ * */
 @Component
 public class InitializeData {
 
