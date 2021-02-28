@@ -1,4 +1,4 @@
-package net.alepuzio.spring.batch.example;
+package net.alepuzio.spring.batch.database;
 
 import javax.sql.DataSource;
 

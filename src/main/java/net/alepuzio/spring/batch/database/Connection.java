@@ -1,36 +1,11 @@
-package net.alepuzio.spring.batch.example;
+package net.alepuzio.spring.batch.database;
 
 import javax.sql.DataSource;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.context.annotation.Bean;
 import org.springframework.core.env.Environment;
-import org.springframework.core.io.ClassPathResource;
 import org.springframework.jdbc.datasource.DriverManagerDataSource;
-import org.springframework.jdbc.datasource.init.ResourceDatabasePopulator;
-
-public class ConfigH2 {
-
-	private Environment env;
-	private Logger log = LoggerFactory.getLogger(this.getClass());
-
-	@Bean
-	public DataSource batchDataSource() {
-		log.info("eseguito batchDataSource");
-		return datasource();
-	}
-
-	
-	ConfigH2(Environment newEnv){
-		this.env = newEnv;
-	}
-
-	private DataSource datasource() {
-		return new Connection(env).datasource();
-	}
-
-}
 
 class Connection {
 

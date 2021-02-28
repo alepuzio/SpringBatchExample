@@ -17,10 +17,11 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.env.Environment;
 
+import net.alepuzio.spring.batch.database.ConfigMariaDB;
 import net.alepuzio.spring.batch.processing.CSVInput;
 import net.alepuzio.spring.batch.processing.FilterProcessItem;
 import net.alepuzio.spring.batch.processing.ReportValidator;
-import net.alepuzio.spring.batch.processing.writer.H2Writer;
+import net.alepuzio.spring.batch.processing.writer.MariaDbWriter;
 import net.alepuzio.spring.batch.processing.writer.XMLOutput;
 import net.alepuzio.spring.model.Report;
 import net.alepuzio.spring.model.Upper;
@@ -36,12 +37,12 @@ public class ConfigBatch {
 	@Autowired
 	private StepBuilderFactory stepBuilderFactory;
 
-	@Autowired//TODO spostare in configH2
+	@Autowired//TODO spostare in configMariaDb
 	private DataSource dataSource;
 
 	@Bean
     public DataSource dataSource(Environment environment) {
-        return new ConfigH2(environment).batchDataSource();
+        return new ConfigMariaDB(environment).batchDataSource();
     }
 
 	@Bean
@@ -78,7 +79,8 @@ public class ConfigBatch {
 				<Report, Report> chunk(5)
 				.reader(readCSV())
 				.processor(itemValidator())
-				.writer(h2Writer()).build();
+				.writer(mariaDbWriter())
+				.build();
 	}
 
 	@Bean
@@ -120,9 +122,9 @@ public class ConfigBatch {
 	}
 
 	@Bean
-	public ItemWriter<? super Report> h2Writer() throws Exception {
+	public ItemWriter<? super Report> mariaDbWriter() throws Exception {
 		log.info("Scrittura su db");
-		return new H2Writer().row(this.dataSource);
+		return new MariaDbWriter().row(this.dataSource);
 	}
 
 }
