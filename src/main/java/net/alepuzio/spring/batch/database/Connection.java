@@ -19,10 +19,9 @@ class Connection {
 	
 	DataSource datasource(){
 		DriverManagerDataSource dataSource = new DriverManagerDataSource();
-		log.debug("-------------->"+env.getProperty("spring.datasource.driverClassName"));
 		dataSource.setPassword(env.getProperty("spring.datasource.password"));
 		dataSource.setUrl(env.getProperty("spring.datasource.url"));
-		dataSource.setUsername(env.getProperty("spring.datasource.user"));
+		dataSource.setUsername(env.getProperty("spring.datasource.username"));
 		dataSource.setDriverClassName(env.getProperty("spring.datasource.driverClassName"));
 		return dataSource;
 	}
