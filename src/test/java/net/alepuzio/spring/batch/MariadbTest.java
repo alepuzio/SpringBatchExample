@@ -1,6 +1,7 @@
 package net.alepuzio.spring.batch;
 
 import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -39,6 +40,7 @@ public class MariadbTest {
 			rs = st.executeQuery("SELECT COUNT(*) FROM REPORT");
 			rs.next();
 			System.out.println(String.format("Read %d rows successfully...", rs.getInt(1)));
+			assertTrue(true);
 		} catch (Exception e) {
 			error(e);
 		}
